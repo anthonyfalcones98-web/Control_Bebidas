@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,8 +11,8 @@
         .overlay{background:rgba(0,0,0,0.78);min-height:100vh;padding:15px 0}
         .con{max-width:960px;margin:0 auto;background:rgba(30,30,30,0.95);border-radius:20px;padding:25px;
             box-shadow:0 0 30px rgba(255,165,0,0.7);position:relative;overflow:hidden}
-        .logos{text-align:center;margin-bottom:20px}
-        .logos img{height:90px;margin:0 20px;vertical-align:middle}
+        .logos{text-align:center;margin-bottom:10px}
+        .logos img{height:100px;margin:0 20px;vertical-align:middle}
         h1{color:#ff9500;text-align:center;font-size:2.5em;text-shadow:0 0 15px #ff9500;margin:10px 0 20px}
         select{background:#333;color:#ff9500;padding:10px;border-radius:10px;border:2px solid #ff9500;font-weight:bold}
         .lang{text-align:center;margin:20px 0}
@@ -30,114 +30,138 @@
         table{width:100%;border-collapse:collapse;margin-top:10px}
         th,td{padding:12px;text-align:left;border-bottom:1px solid #555}
         th{background:#ff9500;color:black;font-weight:bold}
+        footer{color:#ff9500;text-align:center;margin-top:40px;font-size:14px;font-weight:bold}
     </style>
 </head>
 <body>
 <div class="overlay">
 <div class="con">
     <div class="logos">
-        <!-- Logo Münzinghof (escudo) -->
-        <img src="https://i.imgur.com/0v3t5nA.png" alt="Münzinghof">
-        <!-- Logo Junge Leute -->
-        <img src="https://i.imgur.com/2fR9jYp.png" alt="Junge Leute">
+        <img src="https://www.muenzinghof.de/images/design/logo-schild-260@2x.png" alt="Münzinghof">
+        <img src="https://i.imgur.com/1kJ5vN8.png" alt="Junge Leute">
     </div>
     <h1 id="title">Junge Leute · Drink Control</h1>
     
     <div class="lang">
         <select id="langSelect" onchange="changeLang()">
+            <option value="de">Deutsch</option>
             <option value="es">Español</option>
             <option value="en">English</option>
-            <option value="de">Deutsch</option>
         </select>
     </div>
 
     <!-- Login -->
     <div id="login" class="card">
-        <h2 id="tLogin">Iniciar Sesión</h2>
-        <input type="text" id="userLogin" placeholder="Usuario">
-        <input type="password" id="passLogin" placeholder="Contraseña">
-        <button onclick="login()" class="btn-s" id="tEnter">Entrar</button>
-        <button onclick="showReg()" id="tNew">Nuevo Usuario</button>
+        <h2 id="tLogin">Anmelden</h2>
+        <input type="text" id="userLogin" placeholder="Benutzername">
+        <input type="password" id="passLogin" placeholder="Passwort">
+        <button onclick="login()" class="btn-s" id="tEnter">Anmelden</button>
+        <button onclick="showReg()" id="tNew">Neuer Benutzer</button>
     </div>
 
     <!-- Registro -->
     <div id="register" class="card hidden">
-        <h2 id="tReg">Crear Usuario</h2>
-        <input type="text" id="newUser" placeholder="Tu nombre">
-        <input type="password" id="p1" placeholder="Contraseña">
-        <input type="password" id="p2" placeholder="Repetir contraseña">
-        <button onclick="reg()" class="btn-s" id="tCreate">Crear</button>
-        <button onclick="back()" id="tCancel">Cancelar</button>
+        <h2 id="tReg">Benutzer erstellen</h2>
+        <input type="text" id="newUser" placeholder="Dein Name">
+        <input type="password" id="p1" placeholder="Passwort">
+        <input type="password" id="p2" placeholder="Passwort wiederholen">
+        <button onclick="reg()" class="btn-s" id="tCreate">Erstellen</button>
+        <button onclick="back()" id="tCancel">Abbrechen</button>
     </div>
 
     <!-- Panel -->
     <div id="panel" class="hidden">
-        <h2 id="tWelcome">Bienvenido, <span id="name"></span><span id="adminBadge" class="admin-badge hidden">ADMIN</span></h2>
+        <h2 id="tWelcome">Willkommen, <span id="name"></span><span id="adminBadge" class="admin-badge hidden">ADMIN</span></h2>
         <div style="text-align:center">
-            <h3 id="tTotal">Tu total de bebidas:</h3>
+            <h3 id="tTotal">Deine Getränke gesamt:</h3>
             <div id="contador">0</div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:30px 0">
-            <button onclick="addMode()" class="btn-s" style="font-size:24px;padding:25px" id="tAdd">+ Agregar</button>
-            <button onclick="conMode()" class="btn-d" style="font-size:24px;padding:25px" id="tCon">- Consumir</button>
+            <button onclick="addMode()" class="btn-s" style="font-size:24px;padding:25px" id="tAdd">+ Hinzufügen</button>
+            <button onclick="conMode()" class="btn-d" style="font-size:24px;padding:25px" id="tCon">- Verbraucht</button>
         </div>
-        <button onclick="logout()" style="width:100%;padding:18px;font-size:18px" id="tLogout">Cerrar Sesión</button>
+        <button onclick="logout()" style="width:100%;padding:18px;font-size:18px" id="tLogout">Abmelden</button>
 
         <div id="addSec" class="card hidden">
-            <h3 id="tBring">¿Qué traes para la JL?</h3>
-            <button onclick="addBeer()" class="btn-w" style="font-size:20px;padding:20px" id="tBeer">Cerveza</button>
-            <button onclick="showOther()" id="tOther">Otra bebida</button>
+            <h3 id="tBring">Was bringst du mit?</h3>
+            <button onclick="addBeer()" class="btn-w" style="font-size:20px;padding:20px" id="tBeer">Bier</button>
+            <button onclick="showOther()" id="tOther">Anderes Getränk</button>
             <div id="other" class="hidden" style="margin-top:15px">
-                <input type="text" id="oName" placeholder="Ej: Fernet, Jägermeister">
+                <input type="text" id="oName" placeholder="z.B. Jägermeister">
                 <input type="number" id="oQty" value="1" min="1">
-                <button onclick="addO()" class="btn-s" id="tAddO">Agregar</button>
+                <button onclick="addO()" class="btn-s" id="tAddO">Hinzufügen</button>
             </div>
         </div>
 
         <div id="conSec" class="card hidden">
-            <h3 id="tConsumed">¿Qué consumiste?</h3>
+            <h3 id="tConsumed">Was hast du getrunken?</h3>
             <div id="list"></div>
         </div>
     </div>
 
     <div class="card" style="margin-top:40px">
-        <h2 id="tGeneral">Estado General JL Party</h2>
+        <h2 id="tGeneral">JL Party Übersicht</h2>
         <div id="general"></div>
     </div>
+
+    <footer id="footer">Entwickelt von Anthony Oscar Falcones Alcívar</footer>
 </div>
 </div>
 
 <script>
-// (Todo el script exactamente igual que antes, solo copio la parte esencial para que no pese)
-const tr = {es:{title:"Junge Leute · Drink Control",login:"Iniciar Sesión",enter:"Entrar",newU:"Nuevo Usuario",reg:"Crear Usuario",create:"Crear",cancel:"Cancelar",welcome:"Bienvenido, ",total:"Tu total de bebidas:",add:"+ Agregar",con:"- Consumir",logout:"Cerrar Sesión",bring:"¿Qué traes para la JL?",beer:"Cerveza",other:"Otra bebida",addO:"Agregar",consumed:"¿Qué consumiste?",general:"Estado General JL Party",thDrink:"Bebida",thQty:"Cantidad",fill:"Completa todos los campos",passNo:"Las contraseñas no coinciden",exists:"Usuario ya existe",created:"¡Usuario creado!",noUser:"Usuario no encontrado",wrongPass:"Contraseña incorrecta",howBeer:"¿Cuántas cervezas traes?",howMany:"¿Cuántas?",noDrinks:"Aún no trajiste nada",confirmDel:"¿ELIMINAR a \"{0}\" y todas sus bebidas?",deleted:"Usuario eliminado"},en:{title:"Junge Leute · Drink Control",login:"Login",enter:"Login",newU:"New User",reg:"Create User",create:"Create",cancel:"Cancel",welcome:"Welcome, ",total:"Your total drinks:",add:"+ Add",con:"- Consume",logout:"Logout",bring:"What are you bringing?",beer:"Beer",other:"Other drink",addO:"Add",consumed:"What did you drink?",general:"JL Party Status",thDrink:"Drink",thQty:"Quantity",fill:"Fill all fields",passNo:"Passwords don't match",exists:"User already exists",created:"User created!",noUser:"User not found",wrongPass:"Wrong password",howBeer:"How many beers?",howMany:"How many?",noDrinks:"You haven't brought anything yet",confirmDel:"PERMANENTLY DELETE \"{0}\" and all drinks?",deleted:"User deleted"},de:{title:"Junge Leute · Drink Control",login:"Anmelden",enter:"Anmelden",newU:"Neuer Benutzer",reg:"Benutzer erstellen",create:"Erstellen",cancel:"Abbrechen",welcome:"Willkommen, ",total:"Deine Getränke:",add:"+ Hinzufügen",con:"- Verbraucht",logout:"Abmelden",bring:"Was bringst du mit?",beer:"Bier",other:"Anderes Getränk",addO:"Hinzufügen",consumed:"Was hast du getrunken?",general:"JL Party Übersicht",thDrink:"Getränk",thQty:"Menge",fill:"Alle Felder ausfüllen",passNo:"Passwörter stimmen nicht",exists:"Benutzer existiert bereits",created:"Benutzer erstellt!",noUser:"Benutzer nicht gefunden",wrongPass:"Falsches Passwort",howBeer:"Wie viele Biere?",howMany:"Wie viele?",noDrinks:"Du hast noch nichts mitgebracht",confirmDel:"\"{0}\" und alle Getränke endgültig LÖSCHEN?",deleted:"Benutzer gelöscht"}};
+const tr = {
+    es:{title:"Junge Leute · Drink Control",login:"Iniciar Sesión",enter:"Entrar",newU:"Nuevo Usuario",reg:"Crear Usuario",create:"Crear",cancel:"Cancelar",welcome:"Bienvenido, ",total:"Tu total de bebidas:",add:"+ Agregar",con:"- Consumir",logout:"Cerrar Sesión",bring:"¿Qué traes para la JL?",beer:"Cerveza",other:"Otra bebida",addO:"Agregar",consumed:"¿Qué consumiste?",general:"Estado General JL Party",thDrink:"Bebida",thQty:"Cantidad",fill:"Completa todos los campos",passNo:"Las contraseñas no coinciden",exists:"Usuario ya existe",created:"¡Usuario creado!",noUser:"Usuario no encontrado",wrongPass:"Contraseña incorrecta",howBeer:"¿Cuántas cervezas traes?",noDrinks:"Aún no trajiste nada",confirmDel:"¿ELIMINAR a \"{0}\" y todas sus bebidas?",deleted:"Usuario eliminado",footer:"Desarrollado por Anthony Oscar Falcones Alcívar"},
+    en:{title:"Junge Leute · Drink Control",login:"Login",enter:"Login",newU:"New User",reg:"Create User",create:"Create",cancel:"Cancel",welcome:"Welcome, ",total:"Your total drinks:",add:"+ Add",con:"- Consume",logout:"Logout",bring:"What are you bringing?",beer:"Beer",other:"Other drink",addO:"Add",consumed:"What did you drink?",general:"JL Party Status",thDrink:"Drink",thQty:"Quantity",fill:"Fill all fields",passNo:"Passwords don't match",exists:"User already exists",created:"User created!",noUser:"User not found",wrongPass:"Wrong password",howBeer:"How many beers?",noDrinks:"You haven't brought anything yet",confirmDel:"PERMANENTLY DELETE \"{0}\" and all drinks?",deleted:"User deleted",footer:"Developed by Anthony Oscar Falcones Alcívar"},
+    de:{title:"Junge Leute · Drink Control",login:"Anmelden",enter:"Anmelden",newU:"Neuer Benutzer",reg:"Benutzer erstellen",create:"Erstellen",cancel:"Abbrechen",welcome:"Willkommen, ",total:"Deine Getränke gesamt:",add:"+ Hinzufügen",con:"- Verbraucht",logout:"Abmelden",bring:"Was bringst du mit?",beer:"Bier",other:"Anderes Getränk",addO:"Hinzufügen",consumed:"Was hast du getrunken?",general:"JL Party Übersicht",thDrink:"Getränk",thQty:"Menge",fill:"Alle Felder ausfüllen",passNo:"Passwörter stimmen nicht",exists:"Benutzer existiert bereits",created:"Benutzer erstellt!",noUser:"Benutzer nicht gefunden",wrongPass:"Falsches Passwort",howBeer:"Wie viele Biere?",noDrinks:"Du hast noch nichts mitgebracht",confirmDel:"\"{0}\" und alle Getränke endgültig LÖSCHEN?",deleted:"Benutzer gelöscht",footer:"Entwickelt von Anthony Oscar Falcones Alcívar"}
+};
 
-let lang='es',users=JSON.parse(localStorage.getItem('jl_bebidas'))||{},cur=null,admin=false;
-const ADMIN_KEY='anthony',ADMIN_PASS='.Asking882465';
-if(!users[ADMIN_KEY])users[ADMIN_KEY]={name:'Anthony',pass:ADMIN_PASS,drinks:{},isAdmin:true},localStorage.setItem('jl_bebidas',JSON.stringify(users));
+let lang = 'de'; // ← empieza en alemán
+let users = JSON.parse(localStorage.getItem('jl_bebidas')) || {};
+let cur = null;
+let admin = false;
+const ADMIN_KEY = 'anthony';
+const ADMIN_PASS = '.Asking882465';
 
-function t(k,p=null){let s=tr[lang][k]||tr.es[k]||k;return p?s.replace('{0}',p):s}
-function changeLang(){lang=document.getElementById('langSelect').value;upd()}
-function upd(){/* todo el upd() igual que antes */ document.getElementById('title').textContent=t('title');document.getElementById('tLogin').textContent=t('login');document.getElementById('tEnter').textContent=t('enter');document.getElementBy SmallerId('tNew').textContent=t('newU');document.getElementById('tReg').textContent=t('reg');document.getElementById('tCreate').textContent=t('create');document.getElementById('tCancel').textContent=t('cancel');document.getElementById('tWelcome').innerHTML=t('welcome')+'<span id="name"></span><span id="adminBadge" class="admin-badge hidden">ADMIN</span>';document.getElementById('tTotal').textContent=t('total');document.getElementById('tAdd').textContent=t('add');document.getElementById('tCon').textContent=t('con');document.getElementById('tLogout').textContent=t('logout');document.getElementById('tBring').textContent=t('bring');document.getElementById('tBeer').textContent=t('beer');document.getElementById('tOther').textContent=t('other');document.getElementById('tAddO').textContent=t('addO');document.getElementById('tConsumed').textContent=t('consumed');document.getElementById('tGeneral').textContent=t('general');if(cur){document.getElementById('name').textContent=users[cur].name;document.getElementById('adminBadge').classList.toggle('hidden',!admin)}genList();conList()}
+if (!users[ADMIN_KEY]) {
+    users[ADMIN_KEY] = {name:'Anthony',pass:ADMIN_PASS,drinks:{},isAdmin:true};
+    localStorage.setItem('jl_bebidas', JSON.stringify(users));
+}
 
-// === TODAS LAS FUNCIONES (login, reg, add, consume, delete, etc.) ===
-window.login=function(){const u=document.getElementById('userLogin').value.trim(),p=document.getElementById('passLogin').value;if(!u||!p)return alert(t('fill'));const k=u.toLowerCase();if(!users[k])return alert(t('noUser'));if(users[k].pass!==p)return alert(t('wrongPass'));cur=k;admin=(k===ADMIN_KEY);document.getElementById('name').textContent=users[k].name;document.getElementById('adminBadge').classList.toggle('hidden',!admin);document.getElementById('login').classList.add('hidden');document.getElementById('panel').classList.remove('hidden');upd();count();conList()}
-window.showReg=()=>{document.getElementById('login').classList.add('hidden');document.getElementById('register').classList.remove('hidden');upd()}
-window.back=()=>{document.getElementById('register').classList.add('hidden');document.getElementById('login').classList.remove('hidden');upd()}
-window.reg=function(){const u=document.getElementById('newUser').value.trim(),p1=document.getElementById('p1').value,p2=document.getElementById('p2').value;if(!u||!p1||p1!==p2)return alert(t('passNo'));const k=u.toLowerCase();if(users[k])return alert(t('exists'));users[k]={name:u,pass:p1,drinks:{},isAdmin:false};localStorage.setItem('jl_bebidas',JSON.stringify(users));alert(t('created'));back();genList()}
-window.addMode=()=>{document.getElementById('addSec').classList.remove('hidden');document.getElementById('conSec').classList.add('hidden')}
-window.conMode=()=>{document.getElementById('conSec').classList.remove('hidden');document.getElementById('addSec').classList.add('hidden');conList()}
-window.showOther=()=>document.getElementById('other').classList.remove('hidden')
-window.addO=function(){const n=document.getElementById('oName').value.trim().toLowerCase(),q=+document.getElementById('oQty').value;if(n&&q>0){add(n,q);document.getElementById('oName').value='';document.getElementById('other').classList.add('hidden')}}
-window.addBeer=()=>{const q=prompt(t('howBeer'),'6');if(q&&q>0)add('cerveza',+q)}
-function add(t,q){if(!users[cur].drinks[t])users[cur].drinks[t]=0;users[cur].drinks[t]+=q;save()}
-function count(){document.getElementById('contador').textContent=Object.values(users[cur].drinks).reduce((a,b)=>a+b,0)}
-function conList(){const d=document.getElementById('list');d.innerHTML='';const drinks=users[cur].drinks;if(Object.keys(drinks).length===0){d.innerHTML=`<p>${t('noDrinks')}</p>`;return}for(const[type,qty]of Object.entries(drinks)){if(qty<=0)continue;const pretty=type.charAt(0).toUpperCase()+type.slice(1);d.innerHTML+=`<div class="drink"><div><strong>${pretty}</strong>: ${qty}</div><div><input type="number" id="q${type}" min="1" max="${qty}" value="1" style="width:80px"><button class="btn-d" onclick="con('${type}')">OK</button></div></div>`}}
+function t(k) {return tr[lang][k] || tr.de[k] || k}
+function changeLang() {lang = document.getElementById('langSelect').value; upd();}
+function upd() {
+    document.getElementById('langSelect').value = lang;
+    document.getElementById('title').textContent = t('title');
+    document.getElementById('tLogin').textContent = t('login'); document.getElementById('tEnter').textContent = t('enter'); document.getElementById('tNew').textContent = t('newU');
+    document.getElementById('tReg').textContent = t('reg'); document.getElementById('tCreate').textContent = t('create'); document.getElementById('tCancel').textContent = t('cancel');
+    document.getElementById('tWelcome').innerHTML = t('welcome') + '<span id="name"></span><span id="adminBadge" class="admin-badge hidden">ADMIN</span>';
+    document.getElementById('tTotal').textContent = t('total'); document.getElementById('tAdd').textContent = t('add'); document.getElementById('tCon').textContent = t('con'); document.getElementById('tLogout').textContent = t('logout');
+    document.getElementById('tBring').textContent = t('bring'); document.getElementById('tBeer').textContent = t('beer'); document.getElementById('tOther').textContent = t('other'); document.getElementById('tAddO').textContent = t('addO');
+    document.getElementById('tConsumed').textContent = t('consumed'); document.getElementById('tGeneral').textContent = t('general');
+    document.getElementById('footer').textContent = t('footer');
+    if (cur) {document.getElementById('name').textContent = users[cur].name; document.getElementById('adminBadge').classList.toggle('hidden', !admin);}
+    genList(); conList();
+}
+
+/* === TODAS LAS FUNCIONES (login, registro, agregar, consumir, borrar, etc.) === */
+window.login=function(){const u=document.getElementById('userLogin').value.trim(),p=document.getElementById('passLogin').value;if(!u||!p)return alert(t('fill'));const k=u.toLowerCase();if(!users[k])return alert(t('noUser'));if(users[k].pass!==p)return alert(t('wrongPass'));cur=k;admin=(k===ADMIN_KEY);document.getElementById('name').textContent=users[k].name;document.getElementById('adminBadge').classList.toggle('hidden',!admin);document.getElementById('login').classList.add('hidden');document.getElementById('panel').classList.remove('hidden');upd();count();conList();}
+window.showReg=()=>{document.getElementById('login').classList.add('hidden');document.getElementById('register').classList.remove('hidden');upd();}
+window.back=()=>{document.getElementById('register').classList.add('hidden');document.getElementById('login').classList.remove('hidden');upd();}
+window.reg=function(){const u=document.getElementById('newUser').value.trim(),p1=document.getElementById('p1').value,p2=document.getElementById('p2').value;if(!u||!p1||p1!==p2)return alert(t('passNo'));const k=u.toLowerCase();if(users[k])return alert(t('exists'));users[k]={name:u,pass:p1,drinks:{},isAdmin:false};localStorage.setItem('jl_bebidas',JSON.stringify(users));alert(t('created'));back();genList();}
+window.addMode=()=>{document.getElementById('addSec').classList.remove('hidden');document.getElementById('conSec').classList.add('hidden');}
+window.conMode=()=>{document.getElementById('conSec').classList.remove('hidden');document.getElementById('addSec').classList.add('hidden');conList();}
+window.showOther=()=>document.getElementById('other').classList.remove('hidden');
+window.addO=function(){const n=document.getElementById('oName').value.trim().toLowerCase(),q=+document.getElementById('oQty').value;if as(n&&q>0){add(n,q);document.getElementById('oName').value='';document.getElementById('other').classList.add('hidden');}}
+window.addBeer=()=>{const q=prompt(t('howBeer'),'6');if(q&&q>0)add('bier',+q);}
+function add(t,q){if(!users[cur].drinks[t])users[cur].drinks[t]=0;users[cur].drinks[t]+=q;save();}
+function count(){document.getElementById('contador').textContent=Object.values(users[cur].drinks).reduce((a,b)=>a+b,0);}
+function conList(){const d=document.getElementById('list');d.innerHTML='';if(Object.keys(users[cur].drinks).length===0){d.innerHTML=`<p>${t('noDrinks')}</p>`;return}for(const[type,qty]of Object.entries(users[cur].drinks)){if(qty<=0)continue;const pretty=type.charAt(0).toUpperCase()+type.slice(1);d.innerHTML+=`<div class="drink"><div><strong>${pretty}</strong>: ${qty}</div><div><input type="number" id="q${type}" min="1" max="${qty}" value="1" style="width:80px"><button class="btn-d" onclick="con('${type}')">OK</button></div></div>`}}
 window.con=function(t){const q=+document.getElementById('q'+t).value;if(q>0&&users[cur].drinks[t]>=q){users[cur].drinks[t]-=q;if(users[cur].drinks[t]<=0)delete users[cur].drinks[t];save()}}
-function save(){localStorage.setItem('jl_bebidas',JSON.stringify(users));count();conList();genList()}
-window.logout=()=>{if(confirm('Logout?')){cur=null;admin=false;document.getElementById('panel').classList.add('hidden');document.getElementById('login').classList.remove('hidden');document.getElementById('addSec').classList.add('hidden');document.getElementById('conSec').classList.add('hidden');upd()}}
+function save(){localStorage.setItem('jl_bebidas',JSON.stringify(users));count();conList();genList();}
+window.logout=()=>{if(confirm('Abmelden?')){cur=null;admin=false;document.getElementById('panel').classList.add('hidden');document.getElementById('login').classList.remove('hidden');document.getElementById('addSec').classList.add('hidden');document.getElementById('conSec').classList.add('hidden');upd();}}
 window.delUser=function(k){if(!admin||k===ADMIN_KEY)return;if(confirm(t('confirmDel',users[k].name))){delete users[k];save();alert(t('deleted'))}}
 function genList(){const d=document.getElementById('general');d.innerHTML='';for(const k in users){const u=users[k],tot=Object.values(u.drinks).reduce((a,b)=>a+b,0);let html=`<div class="card"><div style="font-size:22px;font-weight:bold;color:#ff9500">${u.name} ${k===ADMIN_KEY?'(ADMIN)':''}: ${tot}</div>`;if(admin&&k!==ADMIN_KEY)html+=` <button class="btn-del" onclick="delUser('${k}')">Löschen</button>`;html+=`<table><tr><th>${t('thDrink')}</th><th>${t('thQty')}</th></tr>`;for(const[b,c]of Object.entries(u.drinks)){const p=b.charAt(0).toUpperCase()+b.slice(1);html+=`<tr><td>${p}</td><td>${c}</td></tr>`}html+='</table></div>';d.innerHTML+=html}}
-upd();genList();
+upd(); genList();
 </script>
 </body>
 </html>
