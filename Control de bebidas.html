@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Bebidas - FUNCIONA 100%</title>
+    <style>
+        body {font-family: Arial, sans-serif; background:#0f0f0f; color:#fff; margin:0; padding:20px; line-height:1.6;}
+        .container {max-width:900px; margin:0 auto; background:#1a1a1a; padding:30px; border-radius:15px; box-shadow:0 0 20px rgba(0,255,255,0.2);}
+        h1 {color:#00ffff; text-align:center;}
+        input, button, select {padding:12px; margin:8px; font-size:16px; border-radius:8px; border:none;}
+        input[type="text"], input[type="password"] {background:#333; color:white; width:280px;}
+        button {background:#00bfff; color:white; cursor:pointer;}
+        button:hover {background:#0099cc;}
+        .btn-verde {background:#28a745;}
+        .btn-rojo {background:#dc3545;}
+        .btn-amarillo {background:#ffc107; color:black;}
+        .hidden {display:none;}
+        #contador {font-size:70px; color:#00ff99; font-weight:bold;}
+        .lista-user {background:#222; padding:15px; margin:10px 0; border-radius:10px; border-left:5px solid #00ffff;}
+        table {width:100%; border-collapse:collapse; margin-top:10px;}
+        th, td {padding:10px; border-bottom:1px solid #444;}
+        th {background:#333;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Control de Bebidas - Fiesta 2025</h1>
+
+    <!-- LOGIN -->
+    <div id="login">
+        <h2>Ingresar</h2>
+        <input type="text" id="userLogin" placeholder="Usuario" autocomplete="off"><br>
+        <input type="password" id="passLogin" placeholder="Contraseña"><br>
+        <button onclick="hacerLogin()">Entrar</button>
+        <button onclick="mostrarRegistro()">Crear usuario nuevo</button>
+    </div>
+
+    <!-- REGISTRO -->
+    <div id="registro" class="hidden">
+        <h2>Crear cuenta nueva</h2>
+        <input type="text" id="nuevoUsuario" placeholder="Nombre de usuario"><br>
+        <input type="password" id="pass1" placeholder="Contraseña"><br>
+        <input type="password" id="pass2" placeholder="Repetir contraseña"><br>
+        <button class="btn-verde" onclick="crearUsuario()">Crear cuenta</button>
+        <button onclick="volverALogin()">Cancelar</button>
+    </div>
+
+    <!-- PANEL DEL USUARIO -->
+    <div id="panel" class="hidden">
+        <h2>Bienvenido <span id="nombreBienvenida"></span>!</h2>
+        <h2>Total tuyo: <span id="contador">0</span></h2>
+
+        <button class="btn-verde" onclick="modoAgregar()">+ Agregar</button>
+        <button class="btn-rojo" onclick="modoConsumir()">- Consumir</button>
+        <button onclick="cerrarSesion()">Cerrar sesión</button>
+
+        <div id="seccionAgregar" class="hidden" style="margin-top:20px;">
+            <h3>¿Qué traés?</h3>
+            <button class="btn-amarillo" onclick="agregarCerveza()">Cerveza</button>
+            <button onclick="mostrarOtraBebida()">Otra bebida</button>
+            <div id="otraBebida" class="hidden" style="margin-top:15px;">
+                <input type="text" id="nombreOtra" placeholder="Nombre (ej: fernet, vodka)"><br>
+                <input type="number" id="cantidadOtra" value="1" min="1"><br>
+                <button class="btn-verde" onclick="confirmarOtra()">Agregar</button>
+            </div>
+        </div>
+
+        <div id="seccionConsumir" class="hidden" style="margin-top:20px;">
+            <h3>¿Qué consumiste?</h3>
+            <div id="listaParaConsumir"></div>
+        </div>
+    </div>
+
+    <!-- LISTA GENERAL (siempre visible) -->
+    <div style="margin-top:40px;">
+        <h2>Estado General (todos ven esto)</h2>
+        <div id="listaGeneral"></div>
+    </div>
+</div>
+
+<script>
+// === TODAS LAS FUNCIONES DENTRO DE window.onload PARA QUE FUNCIONE 100% ===
+window.onload = function() {
+    let usuarios = JSON.parse(localStorage.getItem('bebidas_app')) || {};
+    let usuarioActual = null;
+
+    // Normaliza nombre (ignora mayúsculas/minúsculas y espacios)
+    const norm = n => n.trim().toLowerCase();
+
+    // === LOGIN ===
+    window.hacerLogin = function() {
+        const user = document.getElementById('userLogin').value.trim();
+        const pass = document.getElementById('passLogin').value;
+
+        if (!user || !pass) return alert("Completa usuario y contraseña");
+
+        const clave
