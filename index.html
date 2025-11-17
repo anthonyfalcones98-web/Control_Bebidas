@@ -3,33 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Bebidas</title>
+    <title>Junge Leute · Drink Control</title>
     <style>
-        :root{--p:#00ffff;--bg:#121212;--c:#1e1e1e;--t:#fff;--a:#00bfff;--d:#dc3545;--s:#28a745;--w:#ffc107}
-        body{font-family:Arial,sans-serif;background:var(--bg);color:var(--t);margin:0;padding:15px}
-        .con{max-width:960px;margin:0 auto;background:var(--c);border-radius:20px;padding:25px;box-shadow:0 10px 40px rgba(0,255,255,.15)}
-        h1{color:var(--p);text-align:center;font-size:2.3em;margin:0 0 20px}
-        select{background:#333;color:white;padding:10px;border-radius:10px;border:none;font-size:16px}
-        .lang{text-align:center;margin-bottom:20px}
-        .card{background:#222;padding:20px;border-radius:15px;margin:20px 0}
-        input,button{padding:14px;margin:8px 0;font-size:17px;border-radius:12px;width:100%;border:none}
-        input{background:#333;color:white}
-        button{background:var(--a);color:white;cursor:pointer;font-weight:bold}
-        button:hover{opacity:.9;transform:scale(1.02)}
-        .btn-s{background:var(--s)}.btn-d{background:var(--d)}.btn-w{background:var(--w);color:black}
-        .btn-del{background:#8B0000;padding:8px 12px;font-size:14px}
-        .hidden{display:none}
-        #contador{font-size:80px;color:#00ff99;font-weight:bold;text-align:center;margin:30px 0}
-        .drink{display:flex;justify-content:space-between;align-items:center;background:#333;padding:15px;border-radius:12px;margin:10px 0}
-        .admin-badge{background:#ff4444;color:white;padding:4px 10px;border-radius:20px;font-size:12px;margin-left:10px}
-        table{width:100%;border-collapse:collapse;margin-top:10px}
-        th,td{padding:12px;border-bottom:1px solid #444;text-align:left}
-        th{background:#333;color:var(--p)}
+        body {
+            margin:0; padding:0; font-family:Arial,sans-serif; color:white;
+            background: url('https://i.ibb.co/0jY3Y3Z/jl-fondo.jpg') center/cover no-repeat fixed;
+            min-height:100vh;
+        }
+        .overlay {
+            background: rgba(0,0,0,0.75); min-height:100vh; padding:15px 0;
+        }
+        .con {
+            max-width:960px; margin:0 auto; background:rgba(30,30,30,0.9); border-radius:20px; padding:25px;
+            box-shadow:0 0 30px rgba(255,165,0,0.6); position:relative; overflow:hidden;
+        }
+        .logos {
+            text-align:center; margin-bottom:20px;
+        }
+        .logos img {height:90px; margin:0 15px;}
+        h1 {color:#ff9500; text-align:center; font-size:2.5em; text-shadow:0 0 15px #ff9500; margin:10px 0 20px;}
+        select {background:#333; color:#ff9500; padding:10px; border-radius:10px; border:2px solid #ff9500; font-weight:bold;}
+        .lang {text-align:center; margin:20px 0;}
+        .card {background:rgba(50,50,50,0.9); padding:20px; border-radius:15px; margin:20px 0; border:1px solid #ff9500;}
+        input, button {padding:14px; margin:8px 0; font-size:17px; border-radius:12px; width:100%; border:none;}
+        input {background:#333; color:white; border:1px solid #ff9500;}
+        button {background:#ff9500; color:black; font-weight:bold; cursor:pointer;}
+        button:hover {background:#ffb84d; transform:scale(1.03);}
+        .btn-s {background:#28a745;} .btn-d {background:#dc3545;} .btn-w {background:#ffc107; color:black;}
+        .btn-del {background:#8B0000; padding:8px 12px; font-size:14px;}
+        .hidden {display:none;}
+        #contador {font-size:90px; color:#00ff99; font-weight:bold; text-align:center; margin:30px 0; text-shadow:0 0 20px #00ff99;}
+        .drink {display:flex; justify-content:space-between; align-items:center; background:#333; padding:15px; border-radius:12px; margin:10px 0;}
+        .admin-badge {background:#ff4444; padding:5px 12px; border-radius:20px; font-size:13px; margin-left:10px;}
+        table {width:100%; border-collapse:collapse; margin-top:10px;}
+        th, td {padding:12px; text-align:left; border-bottom:1px solid #555;}
+        th {background:#ff9500; color:black; font-weight:bold;}
     </style>
 </head>
 <body>
+<div class="overlay">
 <div class="con">
-    <h1 id="title">Control de Bebidas</h1>
+    <div class="logos">
+        <img src="https://i.ibb.co/9yZ4Z7Z/logo-schild-260-2x.png" alt="JL Escudo">
+        <img src="https://i.ibb.co/4p7Y7Y4/junge-leute-logo.png" alt="Junge Leute">
+    </div>
+    <h1 id="title">Junge Leute · Drink Control</h1>
+    
     <div class="lang">
         <select id="langSelect" onchange="changeLang()">
             <option value="es">Español</option>
@@ -45,13 +64,13 @@
         <input type="password" id="passLogin" placeholder="Contraseña">
         <button onclick="login()" class="btn-s" id="tEnter">Entrar</button>
         <button onclick="showReg()" id="tNew">Nuevo Usuario</button>
-        <p style="color:#888;font-size:13px">Admin: Anthony | Pass: .Asking882465</p>
+        <p style="color:#ff9500; font-weight:bold;">Admin: Anthony · Pass: .Asking882465</p>
     </div>
 
     <!-- Registro -->
     <div id="register" class="card hidden">
         <h2 id="tReg">Crear Usuario</h2>
-        <input type="text" id="newUser" placeholder="Nombre de usuario">
+        <input type="text" id="newUser" placeholder="Tu nombre">
         <input type="password" id="p1" placeholder="Contraseña">
         <input type="password" id="p2" placeholder="Repetir contraseña">
         <button onclick="reg()" class="btn-s" id="tCreate">Crear</button>
@@ -62,21 +81,21 @@
     <div id="panel" class="hidden">
         <h2 id="tWelcome">Bienvenido, <span id="name"></span><span id="adminBadge" class="admin-badge hidden">ADMIN</span></h2>
         <div style="text-align:center">
-            <h3 id="tTotal">Tu total:</h3>
+            <h3 id="tTotal">Tu total de bebidas:</h3>
             <div id="contador">0</div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:25px 0">
-            <button onclick="addMode()" class="btn-s" style="font-size:22px;padding:20px" id="tAdd">+ Agregar</button>
-            <button onclick="conMode()" class="btn-d" style="font-size:22px;padding:20px" id="tCon">- Consumir</button>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:30px 0">
+            <button onclick="addMode()" class="btn-s" style="font-size:24px; padding:25px" id="tAdd">+ Agregar</button>
+            <button onclick="conMode()" class="btn-d" style="font-size:24px; padding:25px" id="tCon">- Consumir</button>
         </div>
-        <button onclick="logout()" style="width:100%" id="tLogout">Cerrar Sesión</button>
+        <button onclick="logout()" style="width:100%; padding:18px; font-size:18px" id="tLogout">Cerrar Sesión</button>
 
         <div id="addSec" class="card hidden">
-            <h3 id="tBring">¿Qué traes?</h3>
-            <button onclick="addBeer()" class="btn-w" style="font-size:19px;padding:18px" id="tBeer">Cerveza</button>
+            <h3 id="tBring">¿Qué traes para la JL?</h3>
+            <button onclick="addBeer()" class="btn-w" style="font-size:20px; padding:20px" id="tBeer">Cerveza</button>
             <button onclick="showOther()" id="tOther">Otra bebida</button>
             <div id="other" class="hidden" style="margin-top:15px">
-                <input type="text" id="oName" placeholder="Ej: Fernet">
+                <input type="text" id="oName" placeholder="Ej: Fernet, Vodka, Jägermeister">
                 <input type="number" id="oQty" value="1" min="1">
                 <button onclick="addO()" class="btn-s" id="tAddO">Agregar</button>
             </div>
@@ -89,41 +108,21 @@
     </div>
 
     <div class="card" style="margin-top:40px">
-        <h2 id="tGeneral">Estado General</h2>
+        <h2 id="tGeneral">Estado General JL Party</h2>
         <div id="general"></div>
     </div>
+</div>
 </div>
 
 <script>
 const tr = {
-    es:{
-        title:"Control de Bebidas",login:"Iniciar Sesión",enter:"Entrar",newU:"Nuevo Usuario",reg:"Crear Usuario",create:"Crear",cancel:"Cancelar",
-        welcome:"Bienvenido, ",total:"Tu total:",add:"+ Agregar",con:"- Consumir",logout:"Cerrar Sesión",bring:"¿Qué traes?",beer:"Cerveza",
-        other:"Otra bebida",addO:"Agregar",consumed:"¿Qué consumiste?",general:"Estado General de la Fiesta",
-        fill:"Completa todos los campos",passNo:"Las contraseñas no coinciden",exists:"Usuario ya existe",created:"¡Usuario creado!",
-        noUser:"Usuario no encontrado",wrongPass:"Contraseña incorrecta",howBeer:"¿Cuántas cervezas traes?",howMany:"¿Cuántas?",
-        noDrinks:"Aún no trajiste nada",confirmDel:"¿ELIMINAR a \"{0}\" y todas sus bebidas?",deleted:"Usuario eliminado"
-    },
-    en:{
-        title:"Drink Control",login:"Login",enter:"Login",newU:"New User",reg:"Create User",create:"Create",cancel:"Cancel",
-        welcome:"Welcome, ",total:"Your total:",add:"+ Add",con:"- Consume",logout:"Logout",bring:"What are you bringing?",beer:"Beer",
-        other:"Other drink",addO:"Add",consumed:"What did you drink?",general:"Party Status",
-        fill:"Fill all fields",passNo:"Passwords don't match",exists:"User already exists",created:"User created!",
-        noUser:"User not found",wrongPass:"Wrong password",howBeer:"How many beers?",howMany:"How many?",
-        noDrinks:"You haven't brought anything yet",confirmDel:"PERMANENTLY DELETE \"{0}\" and all drinks?",deleted:"User deleted"
-    },
-    de:{
-        title:"Getränkekontrolle",login:"Anmelden",enter:"Anmelden",newU:"Neuer Benutzer",reg:"Benutzer erstellen",create:"Erstellen",cancel:"Abbrechen",
-        welcome:"Willkommen, ",total:"Deมีการรวม:",add:"+ Hinzufügen",con:"- Verbraucht",logout:"Abmelden",bring:"Was bringst du mit?",beer:"Bier",
-        other:"Anderes Getränk",addO:"Hinzufügen",consumed:"Was hast du getrunken?",general:"Party-Übersicht",
-        fill:"Alle Felder ausfüllen",passNo:"Passwörter stimmen nicht",exists:"Benutzer existiert bereits",created:"Benutzer erstellt!",
-        noUser:"Benutzer nicht gefunden",wrongPass:"Falsches Passwort",howBeer:"Wie viele Biere?",howMany:"Wie viele?",
-        noDrinks:"Du hast noch nichts mitgebracht",confirmDel:"\"{0}\" und alle Getränke endgültig LÖSCHEN?",deleted:"Benutzer gelöscht"
-    }
+    es:{title:"Junge Leute · Drink Control",login:"Iniciar Sesión",enter:"Entrar",newU:"Nuevo Usuario",reg:"Crear Usuario",create:"Crear",cancel:"Cancelar",welcome:"Bienvenido, ",total:"Tu total de bebidas:",add:"+ Agregar",con:"- Consumir",logout:"Cerrar Sesión",bring:"¿Qué traes para la JL?",beer:"Cerveza",other:"Otra bebida",addO:"Agregar",consumed:"¿Qué consumiste?",general:"Estado General JL Party",thDrink:"Bebida",thQty:"Cantidad",fill:"Completa todos los campos",passNo:"Las contraseñas no coinciden",exists:"Usuario ya existe",created:"¡Usuario creado!",noUser:"Usuario no encontrado",wrongPass:"Contraseña incorrecta",howBeer:"¿Cuántas cervezas traes?",howMany:"¿Cuántas?",noDrinks:"Aún no trajiste nada",confirmDel:"¿ELIMINAR a \"{0}\" y todas sus bebidas?",deleted:"Usuario eliminado"},
+    en:{title:"Junge Leute · Drink Control",login:"Login",enter:"Login",newU:"New User",reg:"Create User",create:"Create",cancel:"Cancel",welcome:"Welcome, ",total:"Your total drinks:",add:"+ Add",con:"- Consume",logout:"Logout",bring:"What are you bringing?",beer:"Beer",other:"Other drink",addO:"Add",consumed:"What did you drink?",general:"JL Party Status",thDrink:"Drink",thQty:"Quantity",fill:"Fill all fields",passNo:"Passwords don't match",exists:"User already exists",created:"User created!",noUser:"User not found",wrongPass:"Wrong password",howBeer:"How many beers?",howMany:"How many?",noDrinks:"You haven't brought anything yet",confirmDel:"PERMANENTLY DELETE \"{0}\" and all drinks?",deleted:"User deleted"},
+    de:{title:"Junge Leute · Drink Control",login:"Anmelden",enter:"Anmelden",newU:"Neuer Benutzer",reg:"Benutzer erstellen",create:"Erstellen",cancel:"Abbrechen",welcome:"Willkommen, ",total:"Deine Getränke:",add:"+ Hinzufügen",con:"- Verbraucht",logout:"Abmelden",bring:"Was bringst du mit?",beer:"Bier",other:"Anderes Getränk",addO:"Hinzufügen",consumed:"Was hast du getrunken?",general:"JL Party Übersicht",thDrink:"Getränk",thQty:"Menge",fill:"Alle Felder ausfüllen",passNo:"Passwörter stimmen nicht",exists:"Benutzer existiert bereits",created:"Benutzer erstellt!",noUser:"Benutzer nicht gefunden",wrongPass:"Falsches Passwort",howBeer:"Wie viele Biere?",howMany:"Wie viele?",noDrinks:"Du hast noch nichts mitgebracht",confirmDel:"\"{0}\" und alle Getränke endgültig LÖSCHEN?",deleted:"Benutzer gelöscht"}
 };
 
 let lang = 'es';
-let users = JSON.parse(localStorage.getItem('bebidasDB')) || {};
+let users = JSON.parse(localStorage.getItem('jl_bebidas')) || {};
 let cur = null;
 let admin = false;
 const ADMIN_KEY = 'anthony';
@@ -131,7 +130,7 @@ const ADMIN_PASS = '.Asking882465';
 
 if (!users[ADMIN_KEY]) {
     users[ADMIN_KEY] = {name:'Anthony',pass:ADMIN_PASS,drinks:{},isAdmin:true};
-    localStorage.setItem('bebidasDB', JSON.stringify(users));
+    localStorage.setItem('jl_bebidas', JSON.stringify(users));
 }
 
 function t(k, p=null) {
@@ -145,18 +144,29 @@ function changeLang() {
 }
 
 function upd() {
-    const e = id => document.getElementById(id);
-    e('title').textContent = t('title');
-    e('tLogin').textContent = t('login'); e('tEnter').textContent = t('enter'); e('tNew').textContent = t('newU');
-    e('tReg').textContent = t('reg'); e('tCreate').textContent = t('create'); e('tCancel').textContent = t('cancel');
-    e('tWelcome').innerHTML = t('welcome') + '<span id="name"></span><span id="adminBadge" class="admin-badge hidden">ADMIN</span>';
-    e('tTotal').textContent = t('total'); e('tAdd').textContent = t('add'); e('tCon').textContent = t('con'); e('tLogout').textContent = t('logout');
-    e('tBring').textContent = t('bring'); e('tBeer').textContent = t('beer'); e('tOther').textContent = t('other'); e('tAddO').textContent = t('addO');
-    e('tConsumed').textContent = t('consumed'); e('tGeneral').textContent = t('general');
-    if (cur) { e('name').textContent = users[cur].name; e('adminBadge').classList.toggle('hidden', !admin); }
+    document.getElementById('title').textContent = t('title');
+    document.getElementById('tLogin').textContent = t('login');
+    document.getElementById('tEnter').textContent = t('enter');
+    document.getElementById('tNew').textContent = t('newU');
+    document.getElementById('tReg').textContent = t('reg');
+    document.getElementById('tCreate').textContent = t('create');
+    document.getElementById('tCancel').textContent = t('cancel');
+    document.getElementById('tWelcome').innerHTML = t('welcome') + '<span id="name"></span><span id="adminBadge" class="admin-badge hidden">ADMIN</span>';
+    document.getElementById('tTotal').textContent = t('total');
+    document.getElementById('tAdd').textContent = t('add');
+    document.getElementById('tCon').textContent = t('con');
+    document.getElementById('tLogout').textContent = t('logout');
+    document.getElementById('tBring').textContent = t('bring');
+    document.getElementById('tBeer').textContent = t('beer');
+    document.getElementById('tOther').textContent = t('other');
+    document.getElementById('tAddO').textContent = t('addO');
+    document.getElementById('tConsumed').textContent = t('consumed');
+    document.getElementById('tGeneral').textContent = t('general');
+    if (cur) { document.getElementById('name').textContent = users[cur].name; document.getElementById('adminBadge').classList.toggle('hidden', !admin); }
     genList(); conList();
 }
 
+// === Todas las funciones (login, agregar, consumir, borrar, etc.) ===
 window.login = function() {
     const u = document.getElementById('userLogin').value.trim();
     const p = document.getElementById('passLogin').value;
@@ -180,9 +190,8 @@ window.reg = function(){
     if(!u||!p1||p1!==p2) return alert(t('passNo'));
     const k=u.toLowerCase();
     if(users[k]) return alert(t('exists'));
-    if(k===ADMIN_KEY) return alert('Reservado');
     users[k]={name:u,pass:p1,drinks:{},isAdmin:false};
-    localStorage.setItem('bebidasDB',JSON.stringify(users));
+    localStorage.setItem('jl_bebidas',JSON.stringify(users));
     alert(t('created')); back(); genList();
 };
 
@@ -194,7 +203,6 @@ window.addO = function(){
     const q=+document.getElementById('oQty').value;
     if(n&&q>0){add(n,q);document.getElementById('oName').value='';document.getElementById('other').classList.add('hidden');}
 };
-
 window.addBeer = ()=>{const q=prompt(t('howBeer'),'6'); if(q&&q>0)add('cerveza',+q);}
 function add(t,q){if(!users[cur].drinks[t])users[cur].drinks[t]=0; users[cur].drinks[t]+=q; save();}
 function count(){document.getElementById('contador').textContent=Object.values(users[cur].drinks).reduce((a,b)=>a+b,0);}
@@ -206,7 +214,7 @@ function conList(){
         if(qty<=0)continue;
         const pretty=type.charAt(0).toUpperCase()+type.slice(1);
         d.innerHTML+=`<div class="drink"><div><strong>${pretty}</strong>: ${qty}</div>
-            <div><input type="number" id="q${type}" min="1" max="${qty}" value="1" style="width:70px">
+            <div><input type="number" id="q${type}" min="1" max="${qty}" value="1" style="width:80px">
             <button class="btn-d" onclick="con('${type}')">OK</button></div></div>`;
     }
 }
@@ -218,8 +226,7 @@ window.con = function(t){
         save();
     }
 };
-
-function save(){localStorage.setItem('bebidasDB',JSON.stringify(users));count();conList();genList();}
+function save(){localStorage.setItem('jl_bebidas',JSON.stringify(users));count();conList();genList();}
 window.logout = ()=>{if(confirm('Logout?')){cur=null;admin=false;document.getElementById('panel').classList.add('hidden');document.getElementById('login').classList.remove('hidden');document.getElementById('addSec').classList.add('hidden');document.getElementById('conSec').classList.add('hidden');upd();}}
 
 window.delUser = function(k){
@@ -234,9 +241,9 @@ function genList(){
     for(const k in users){
         const u=users[k];
         const tot=Object.values(u.drinks).reduce((a,b)=>a+b,0);
-        let html=`<div class="card"><div style="font-size:20px;font-weight:bold;color:var(--p)">${u.name} ${k===ADMIN_KEY?'(ADMIN)':''}: ${tot}</div>`;
+        let html=`<div class="card"><div style="font-size:22px;font-weight:bold;color:#ff9500">${u.name} ${k===ADMIN_KEY?'(ADMIN)':''}: ${tot}</div>`;
         if(admin&&k!==ADMIN_KEY) html+=` <button class="btn-del" onclick="delUser('${k}')">Löschen</button>`;
-        html+='<table><tr><th>Getränk</th><th>Menge</th></tr>';
+        html+=`<table><tr><th>${t('thDrink')}</th><th>${t('thQty')}</th></tr>`;
         for(const [b,c]of Object.entries(u.drinks)){
             const p=b.charAt(0).toUpperCase()+b.slice(1);
             html+=`<tr><td>${p}</td><td>${c}</td></tr>`;
