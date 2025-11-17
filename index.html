@@ -13,6 +13,7 @@
             box-shadow:0 0 30px rgba(255,165,0,0.7);position:relative;overflow:hidden}
         .logos{text-align:center;margin-bottom:10px}
         .logos img{height:100px;margin:0 20px;vertical-align:middle}
+        .jl-logo {color:#ff9500; font-size:48px; font-weight:bold; letter-spacing:2px; text-shadow:0 0 10px #ff9500;}
         h1{color:#ff9500;text-align:center;font-size:2.5em;text-shadow:0 0 15px #ff9500;margin:10px 0 20px}
         select{background:#333;color:#ff9500;padding:10px;border-radius:10px;border:2px solid #ff9500;font-weight:bold}
         .lang{text-align:center;margin:20px 0}
@@ -38,7 +39,7 @@
 <div class="con">
     <div class="logos">
         <img src="https://www.muenzinghof.de/images/design/logo-schild-260@2x.png" alt="Münzinghof">
-        <img src="https://i.imgur.com/1kJ5vN8.png" alt="Junge Leute">
+        <div class="jl-logo">JL <span style="font-size:24px; font-weight:normal;">Junge Leute</span></div>
     </div>
     <h1 id="title">Junge Leute · Drink Control</h1>
     
@@ -115,7 +116,7 @@ const tr = {
     de:{title:"Junge Leute · Drink Control",login:"Anmelden",enter:"Anmelden",newU:"Neuer Benutzer",reg:"Benutzer erstellen",create:"Erstellen",cancel:"Abbrechen",welcome:"Willkommen, ",total:"Deine Getränke gesamt:",add:"+ Hinzufügen",con:"- Verbraucht",logout:"Abmelden",bring:"Was bringst du mit?",beer:"Bier",other:"Anderes Getränk",addO:"Hinzufügen",consumed:"Was hast du getrunken?",general:"JL Party Übersicht",thDrink:"Getränk",thQty:"Menge",fill:"Alle Felder ausfüllen",passNo:"Passwörter stimmen nicht",exists:"Benutzer existiert bereits",created:"Benutzer erstellt!",noUser:"Benutzer nicht gefunden",wrongPass:"Falsches Passwort",howBeer:"Wie viele Biere?",noDrinks:"Du hast noch nichts mitgebracht",confirmDel:"\"{0}\" und alle Getränke endgültig LÖSCHEN?",deleted:"Benutzer gelöscht",footer:"Entwickelt von Anthony Oscar Falcones Alcívar"}
 };
 
-let lang = 'de'; // ← empieza en alemán
+let lang = 'de'; // Arranca en alemán
 let users = JSON.parse(localStorage.getItem('jl_bebidas')) || {};
 let cur = null;
 let admin = false;
@@ -127,40 +128,117 @@ if (!users[ADMIN_KEY]) {
     localStorage.setItem('jl_bebidas', JSON.stringify(users));
 }
 
-function t(k) {return tr[lang][k] || tr.de[k] || k}
-function changeLang() {lang = document.getElementById('langSelect').value; upd();}
+function t(k, p=null) {
+    let s = tr[lang][k] || tr.de[k] || k;
+    return p ? s.replace('{0}', p) : s;
+}
+
+function changeLang() {
+    lang = document.getElementById('langSelect').value;
+    upd();
+}
+
 function upd() {
     document.getElementById('langSelect').value = lang;
     document.getElementById('title').textContent = t('title');
-    document.getElementById('tLogin').textContent = t('login'); document.getElementById('tEnter').textContent = t('enter'); document.getElementById('tNew').textContent = t('newU');
-    document.getElementById('tReg').textContent = t('reg'); document.getElementById('tCreate').textContent = t('create'); document.getElementById('tCancel').textContent = t('cancel');
+    document.getElementById('tLogin').textContent = t('login');
+    document.getElementById('tEnter').textContent = t('enter');
+    document.getElementById('tNew').textContent = t('newU');
+    document.getElementById('tReg').textContent = t('reg');
+    document.getElementById('tCreate').textContent = t('create');
+    document.getElementById('tCancel').textContent = t('cancel');
     document.getElementById('tWelcome').innerHTML = t('welcome') + '<span id="name"></span><span id="adminBadge" class="admin-badge hidden">ADMIN</span>';
-    document.getElementById('tTotal').textContent = t('total'); document.getElementById('tAdd').textContent = t('add'); document.getElementById('tCon').textContent = t('con'); document.getElementById('tLogout').textContent = t('logout');
-    document.getElementById('tBring').textContent = t('bring'); document.getElementById('tBeer').textContent = t('beer'); document.getElementById('tOther').textContent = t('other'); document.getElementById('tAddO').textContent = t('addO');
-    document.getElementById('tConsumed').textContent = t('consumed'); document.getElementById('tGeneral').textContent = t('general');
+    document.getElementById('tTotal').textContent = t('total');
+    document.getElementById('tAdd').textContent = t('add');
+    document.getElementById('tCon').textContent = t('con');
+    document.getElementById('tLogout').textContent = t('logout');
+    document.getElementById('tBring').textContent = t('bring');
+    document.getElementById('tBeer').textContent = t('beer');
+    document.getElementById('tOther').textContent = t('other');
+    document.getElementById('tAddO').textContent = t('addO');
+    document.getElementById('tConsumed').textContent = t('consumed');
+    document.getElementById('tGeneral').textContent = t('general');
     document.getElementById('footer').textContent = t('footer');
-    if (cur) {document.getElementById('name').textContent = users[cur].name; document.getElementById('adminBadge').classList.toggle('hidden', !admin);}
+    if (cur) { document.getElementById('name').textContent = users[cur].name; document.getElementById('adminBadge').classList.toggle('hidden', !admin); }
     genList(); conList();
 }
 
-/* === TODAS LAS FUNCIONES (login, registro, agregar, consumir, borrar, etc.) === */
-window.login=function(){const u=document.getElementById('userLogin').value.trim(),p=document.getElementById('passLogin').value;if(!u||!p)return alert(t('fill'));const k=u.toLowerCase();if(!users[k])return alert(t('noUser'));if(users[k].pass!==p)return alert(t('wrongPass'));cur=k;admin=(k===ADMIN_KEY);document.getElementById('name').textContent=users[k].name;document.getElementById('adminBadge').classList.toggle('hidden',!admin);document.getElementById('login').classList.add('hidden');document.getElementById('panel').classList.remove('hidden');upd();count();conList();}
-window.showReg=()=>{document.getElementById('login').classList.add('hidden');document.getElementById('register').classList.remove('hidden');upd();}
-window.back=()=>{document.getElementById('register').classList.add('hidden');document.getElementById('login').classList.remove('hidden');upd();}
-window.reg=function(){const u=document.getElementById('newUser').value.trim(),p1=document.getElementById('p1').value,p2=document.getElementById('p2').value;if(!u||!p1||p1!==p2)return alert(t('passNo'));const k=u.toLowerCase();if(users[k])return alert(t('exists'));users[k]={name:u,pass:p1,drinks:{},isAdmin:false};localStorage.setItem('jl_bebidas',JSON.stringify(users));alert(t('created'));back();genList();}
-window.addMode=()=>{document.getElementById('addSec').classList.remove('hidden');document.getElementById('conSec').classList.add('hidden');}
-window.conMode=()=>{document.getElementById('conSec').classList.remove('hidden');document.getElementById('addSec').classList.add('hidden');conList();}
-window.showOther=()=>document.getElementById('other').classList.remove('hidden');
-window.addO=function(){const n=document.getElementById('oName').value.trim().toLowerCase(),q=+document.getElementById('oQty').value;if as(n&&q>0){add(n,q);document.getElementById('oName').value='';document.getElementById('other').classList.add('hidden');}}
-window.addBeer=()=>{const q=prompt(t('howBeer'),'6');if(q&&q>0)add('bier',+q);}
-function add(t,q){if(!users[cur].drinks[t])users[cur].drinks[t]=0;users[cur].drinks[t]+=q;save();}
-function count(){document.getElementById('contador').textContent=Object.values(users[cur].drinks).reduce((a,b)=>a+b,0);}
-function conList(){const d=document.getElementById('list');d.innerHTML='';if(Object.keys(users[cur].drinks).length===0){d.innerHTML=`<p>${t('noDrinks')}</p>`;return}for(const[type,qty]of Object.entries(users[cur].drinks)){if(qty<=0)continue;const pretty=type.charAt(0).toUpperCase()+type.slice(1);d.innerHTML+=`<div class="drink"><div><strong>${pretty}</strong>: ${qty}</div><div><input type="number" id="q${type}" min="1" max="${qty}" value="1" style="width:80px"><button class="btn-d" onclick="con('${type}')">OK</button></div></div>`}}
-window.con=function(t){const q=+document.getElementById('q'+t).value;if(q>0&&users[cur].drinks[t]>=q){users[cur].drinks[t]-=q;if(users[cur].drinks[t]<=0)delete users[cur].drinks[t];save()}}
-function save(){localStorage.setItem('jl_bebidas',JSON.stringify(users));count();conList();genList();}
-window.logout=()=>{if(confirm('Abmelden?')){cur=null;admin=false;document.getElementById('panel').classList.add('hidden');document.getElementById('login').classList.remove('hidden');document.getElementById('addSec').classList.add('hidden');document.getElementById('conSec').classList.add('hidden');upd();}}
-window.delUser=function(k){if(!admin||k===ADMIN_KEY)return;if(confirm(t('confirmDel',users[k].name))){delete users[k];save();alert(t('deleted'))}}
-function genList(){const d=document.getElementById('general');d.innerHTML='';for(const k in users){const u=users[k],tot=Object.values(u.drinks).reduce((a,b)=>a+b,0);let html=`<div class="card"><div style="font-size:22px;font-weight:bold;color:#ff9500">${u.name} ${k===ADMIN_KEY?'(ADMIN)':''}: ${tot}</div>`;if(admin&&k!==ADMIN_KEY)html+=` <button class="btn-del" onclick="delUser('${k}')">Löschen</button>`;html+=`<table><tr><th>${t('thDrink')}</th><th>${t('thQty')}</th></tr>`;for(const[b,c]of Object.entries(u.drinks)){const p=b.charAt(0).toUpperCase()+b.slice(1);html+=`<tr><td>${p}</td><td>${c}</td></tr>`}html+='</table></div>';d.innerHTML+=html}}
+// Funciones (igual que antes)
+window.login = function() {
+    const u = document.getElementById('userLogin').value.trim();
+    const p = document.getElementById('passLogin').value;
+    if (!u || !p) return alert(t('fill'));
+    const k = u.toLowerCase();
+    if (!users[k]) return alert(t('noUser'));
+    if (users[k].pass !== p) return alert(t('wrongPass'));
+    cur = k; admin = (k === ADMIN_KEY);
+    document.getElementById('name').textContent = users[k].name;
+    document.getElementById('adminBadge').classList.toggle('hidden', !admin);
+    document.getElementById('login').classList.add('hidden');
+    document.getElementById('panel').classList.remove('hidden');
+    upd(); count(); conList();
+};
+
+window.showReg = () => { document.getElementById('login').classList.add('hidden'); document.getElementById('register').classList.remove('hidden'); upd(); };
+window.back = () => { document.getElementById('register').classList.add('hidden'); document.getElementById('login').classList.remove('hidden'); upd(); };
+window.reg = function() {
+    const u = document.getElementById('newUser').value.trim();
+    const p1 = document.getElementById('p1').value, p2 = document.getElementById('p2').value;
+    if (!u || !p1 || p1 !== p2) return alert(t('passNo'));
+    const k = u.toLowerCase();
+    if (users[k]) return alert(t('exists'));
+    users[k] = { name: u, pass: p1, drinks: {}, isAdmin: false };
+    localStorage.setItem('jl_bebidas', JSON.stringify(users));
+    alert(t('created')); back(); genList();
+};
+
+window.addMode = () => { document.getElementById('addSec').classList.remove('hidden'); document.getElementById('conSec').classList.add('hidden'); };
+window.conMode = () => { document.getElementById('conSec').classList.remove('hidden'); document.getElementById('addSec').classList.add('hidden'); conList(); };
+window.showOther = () => document.getElementById('other').classList.remove('hidden');
+window.addO = function() {
+    const n = document.getElementById('oName').value.trim().toLowerCase();
+    const q = +document.getElementById('oQty').value;
+    if (n && q > 0) { add(n, q); document.getElementById('oName').value = ''; document.getElementById('other').classList.add('hidden'); }
+};
+window.addBeer = () => { const q = prompt(t('howBeer'), '6'); if (q && q > 0) add('bier', +q); };
+function add(t, q) { if (!users[cur].drinks[t]) users[cur].drinks[t] = 0; users[cur].drinks[t] += q; save(); }
+function count() { document.getElementById('contador').textContent = Object.values(users[cur].drinks).reduce((a, b) => a + b, 0); }
+function conList() {
+    const d = document.getElementById('list'); d.innerHTML = '';
+    if (Object.keys(users[cur].drinks).length === 0) { d.innerHTML = `<p>${t('noDrinks')}</p>`; return; }
+    for (const [type, qty] of Object.entries(users[cur].drinks)) {
+        if (qty <= 0) continue;
+        const pretty = type.charAt(0).toUpperCase() + type.slice(1);
+        d.innerHTML += `<div class="drink"><div><strong>${pretty}</strong>: ${qty}</div><div><input type="number" id="q${type}" min="1" max="${qty}" value="1" style="width:80px"><button class="btn-d" onclick="con('${type}')">OK</button></div></div>`;
+    }
+}
+window.con = function(t) {
+    const q = +document.getElementById('q' + t).value;
+    if (q > 0 && users[cur].drinks[t] >= q) {
+        users[cur].drinks[t] -= q;
+        if (users[cur].drinks[t] <= 0) delete users[cur].drinks[t];
+        save();
+    }
+};
+function save() { localStorage.setItem('jl_bebidas', JSON.stringify(users)); count(); conList(); genList(); }
+window.logout = () => { if (confirm('Abmelden?')) { cur = null; admin = false; document.getElementById('panel').classList.add('hidden'); document.getElementById('login').classList.remove('hidden'); document.getElementById('addSec').classList.add('hidden'); document.getElementById('conSec').classList.add('hidden'); upd(); } };
+window.delUser = function(k) { if (!admin || k === ADMIN_KEY) return; if (confirm(t('confirmDel', users[k].name))) { delete users[k]; save(); alert(t('deleted')); } };
+function genList() {
+    const d = document.getElementById('general'); d.innerHTML = '';
+    for (const k in users) {
+        const u = users[k], tot = Object.values(u.drinks).reduce((a, b) => a + b, 0);
+        let html = `<div class="card"><div style="font-size:22px;font-weight:bold;color:#ff9500">${u.name} ${k === ADMIN_KEY ? '(ADMIN)' : ''}: ${tot}</div>`;
+        if (admin && k !== ADMIN_KEY) html += ` <button class="btn-del" onclick="delUser('${k}')">Löschen</button>`;
+        html += `<table><tr><th>${t('thDrink')}</th><th>${t('thQty')}</th></tr>`;
+        for (const [b, c] of Object.entries(u.drinks)) {
+            const p = b.charAt(0).toUpperCase() + b.slice(1);
+            html += `<tr><td>${p}</td><td>${c}</td></tr>`;
+        }
+        html += '</table></div>';
+        d.innerHTML += html;
+    }
+}
+
 upd(); genList();
 </script>
 </body>
