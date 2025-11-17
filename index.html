@@ -5,46 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de Bebidas</title>
     <style>
-        :root {
-            --primary: #00ffff;
-            --bg: #121212;
-            --card: #1a1a1a;
-            --text: #fff;
-            --accent: #00bfff;
-            --danger: #dc3545;
-            --success: #28a745;
-            --warning: #ffc107;
-        }
-        body {font-family: 'Segoe UI', Arial, sans-serif; background:var(--bg); color:var(--text); margin:0; padding:15px;}
-        .container {max-width:960px; margin:0 auto; background:var(--card); border-radius:20px; padding:25px; box-shadow:0 10px 40px rgba(0,255,255,0.15);}
-        h1 {color:var(--primary); text-align:center; font-size:2.2em; margin:0 0 20px;}
-        select {background:#333; color:white; padding:10px; border-radius:10px; border:none; font-size:16px;}
-        .lang-selector {text-align:center; margin-bottom:20px;}
-        .card {background:#222; padding:20px; border-radius:15px; margin:20px 0; box-shadow:0 5px 15px rgba(0,0,0,0.5);}
-        input, button {padding:14px; margin:8px 0; font-size:17px; border-radius:12px; width:100%; border:none;}
-        input {background:#333; color:white;}
-        button {background:var(--accent); color:white; cursor:pointer; font-weight:bold;}
-        button:hover {opacity:0.9; transform:scale(1.02);}
-        .btn-success {background:var(--success);}
-        .btn-danger {background:var(--danger);}
-        .btn-warning {background:var(--warning); color:black;}
-        .btn-delete {background:#8B0000; padding:8px 12px; font-size:14px;}
-        .hidden {display:none;}
-        #contador {font-size:80px; color:#00ff99; font-weight:bold; text-align:center; margin:20px 0;}
-        .drink-item {background:#333; padding:15px; border-radius:12px; margin:10px 0; display:flex; justify-content:space-between; align-items:center;}
-        .total-item {font-size:20px; font-weight:bold; color:var(--primary);}
-        .admin-badge {background:#ff4444; color:white; padding:4px 10px; border-radius:20px; font-size:12px; margin-left:10px;}
-        table {width:100%; border-collapse:collapse; margin-top:10px;}
-        th, td {padding:12px; text-align:left; border-bottom:1px solid #444;}
-        th {background:#333; color:var(--primary);}
+        :root{--p:#00ffff;--bg:#121212;--c:#1e1e1e;--t:#fff;--a:#00bfff;--d:#dc3545;--s:#28a745;--w:#ffc107}
+        body{font-family:Arial,sans-serif;background:var(--bg);color:var(--t);margin:0;padding:15px}
+        .con{max-width:960px;margin:0 auto;background:var(--c);border-radius:20px;padding:25px;box-shadow:0 10px 40px rgba(0,255,255,.15)}
+        h1{color:var(--p);text-align:center;font-size:2.3em;margin:0 0 20px}
+        select{background:#333;color:white;padding:10px;border-radius:10px;border:none;font-size:16px}
+        .lang{text-align:center;margin-bottom:20px}
+        .card{background:#222;padding:20px;border-radius:15px;margin:20px 0}
+        input,button{padding:14px;margin:8px 0;font-size:17px;border-radius:12px;width:100%;border:none}
+        input{background:#333;color:white}
+        button{background:var(--a);color:white;cursor:pointer;font-weight:bold}
+        button:hover{opacity:.9;transform:scale(1.02)}
+        .btn-s{background:var(--s)}.btn-d{background:var(--d)}.btn-w{background:var(--w);color:black}
+        .btn-del{background:#8B0000;padding:8px 12px;font-size:14px}
+        .hidden{display:none}
+        #contador{font-size:80px;color:#00ff99;font-weight:bold;text-align:center;margin:30px 0}
+        .drink{display:flex;justify-content:space-between;align-items:center;background:#333;padding:15px;border-radius:12px;margin:10px 0}
+        .admin-badge{background:#ff4444;color:white;padding:4px 10px;border-radius:20px;font-size:12px;margin-left:10px}
+        table{width:100%;border-collapse:collapse;margin-top:10px}
+        th,td{padding:12px;border-bottom:1px solid #444;text-align:left}
+        th{background:#333;color:var(--p)}
     </style>
 </head>
 <body>
-<div class="container">
+<div class="con">
     <h1 id="title">Control de Bebidas</h1>
-    
-    <div class="lang-selector">
-        <select id="langSelect" onchange="changeLanguage()">
+    <div class="lang">
+        <select id="langSelect" onchange="changeLang()">
             <option value="es">Español</option>
             <option value="en">English</option>
             <option value="de">Deutsch</option>
@@ -53,143 +40,213 @@
 
     <!-- Login -->
     <div id="login" class="card">
-        <h2 id="loginTitle">Iniciar Sesión</h2>
+        <h2 id="tLogin">Iniciar Sesión</h2>
         <input type="text" id="userLogin" placeholder="Usuario">
         <input type="password" id="passLogin" placeholder="Contraseña">
-        <button onclick="login()" class="btn-success" id="btnEnter">Entrar</button>
-        <button onclick="showRegister()" id="btnNewUser">Nuevo Usuario</button>
-        <p style="font-size:13px; color:#888; margin-top:15px;">
-            Admin: Anthony | Pass: .Asking882465
-        </p>
+        <button onclick="login()" class="btn-s" id="tEnter">Entrar</button>
+        <button onclick="showReg()" id="tNew">Nuevo Usuario</button>
+        <p style="color:#888;font-size:13px">Admin: Anthony | Pass: .Asking882465</p>
     </div>
 
     <!-- Registro -->
     <div id="register" class="card hidden">
-        <h2 id="registerTitle">Crear Usuario</h2>
+        <h2 id="tReg">Crear Usuario</h2>
         <input type="text" id="newUser" placeholder="Nombre de usuario">
-        <input type="password" id="newPass1" placeholder="Contraseña">
-        <input type="password" id="newPass2" placeholder="Repetir contraseña">
-        <button onclick="registerUser()" class="btn-success" id="btnCreate">Crear Cuenta</button>
-        <button onclick="backToLogin()" id="btnCancel">Cancelar</button>
+        <input type="password" id="p1" placeholder="Contraseña">
+        <input type="password" id="p2" placeholder="Repetir contraseña">
+        <button onclick="reg()" class="btn-s" id="tCreate">Crear</button>
+        <button onclick="back()" id="tCancel">Cancelar</button>
     </div>
 
-    <!-- Panel Principal -->
+    <!-- Panel -->
     <div id="panel" class="hidden">
-        <h2 id="welcomeMsg">Bienvenido, <span id="welcomeName"></span><span id="adminTag" class="admin-badge hidden">ADMIN</span>!</h2>
-        <div style="text-align:center;">
-            <h3 id="yourTotal">Tu total de bebidas:</h3>
+        <h2 id="tWelcome">Bienvenido, <span id="name"></span><span id="adminBadge" class="admin-badge hidden">ADMIN</span></h2>
+        <div style="text-align:center">
+            <h3 id="tTotal">Tu total:</h3>
             <div id="contador">0</div>
         </div>
-
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin:20px 0;">
-            <button onclick="addMode()" class="btn-success" style="font-size:22px; padding:20px;" id="btnAdd">+ Agregar</button>
-            <button onclick="consumeMode()" class="btn-danger" style="font-size:22px; padding:20px;" id="btnConsume">- Consumir</button>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:25px 0">
+            <button onclick="addMode()" class="btn-s" style="font-size:22px;padding:20px" id="tAdd">+ Agregar</button>
+            <button onclick="conMode()" class="btn-d" style="font-size:22px;padding:20px" id="tCon">- Consumir</button>
         </div>
-        <button onclick="logout()" style="width:100%;" id="btnLogout">Cerrar Sesión</button>
+        <button onclick="logout()" style="width:100%" id="tLogout">Cerrar Sesión</button>
 
-        <!-- Agregar -->
-        <div id="addSection" class="card hidden">
-            <h3 id="addTitle">¿Qué traes hoy?</h3>
-            <button onclick="addBeer()" class="btn-warning" style="font-size:18px; padding:18px;" id="btnBeer">Cerveza</button>
-            <button onclick="showOther()" id="btnOther">Otra bebida</button>
-            <div id="otherForm" class="hidden" style="margin-top:15px;">
-                <input type="text" id="otherName" placeholder="Ej: Fernet, Vodka, Vino">
-                <input type="number" id="otherQty" value="1" min="1">
-                <button onclick="addOther()" class="btn-success" id="btnAddOther">Agregar</button>
+        <div id="addSec" class="card hidden">
+            <h3 id="tBring">¿Qué traes?</h3>
+            <button onclick="addBeer()" class="btn-w" style="font-size:19px;padding:18px" id="tBeer">Cerveza</button>
+            <button onclick="showOther()" id="tOther">Otra bebida</button>
+            <div id="other" class="hidden" style="margin-top:15px">
+                <input type="text" id="oName" placeholder="Ej: Fernet">
+                <input type="number" id="oQty" value="1" min="1">
+                <button onclick="addO()" class="btn-s" id="tAddO">Agregar</button>
             </div>
         </div>
 
-        <!-- Consumir -->
-        <div id="consumeSection" class="card hidden">
-            <h3 id="consumeTitle">¿Qué consumiste?</h3>
-            <div id="consumeList"></div>
+        <div id="conSec" class="card hidden">
+            <h3 id="tConsumed">¿Qué consumiste?</h3>
+            <div id="list"></div>
         </div>
     </div>
 
-    <!-- Lista General -->
-    <div class="card" style="margin-top:40px;">
-        <h2 id="generalTitle">Estado General de la Fiesta</h2>
-        <div id="generalList"></div>
+    <div class="card" style="margin-top:40px">
+        <h2 id="tGeneral">Estado General</h2>
+        <div id="general"></div>
     </div>
 </div>
 
 <script>
-    const translations = { /* ... mismo objeto de traducciones que antes ... */ };
-    // (lo dejo igual que en el mensaje anterior para no alargar)
-
-    let currentLang = 'es';
-    let users = JSON.parse(localStorage.getItem('bebidasDB')) || {};
-    let currentUser = null;
-    let isAdmin = false;
-
-    // ADMIN CORRECTO
-    const ADMIN_KEY = 'anthony';        // clave en minúsculas
-    const ADMIN_PASS = '.Asking882465'; // con punto al inicio
-
-    // Crear admin si no existe
-    if (!users[ADMIN_KEY]) {
-        users[ADMIN_KEY] = {
-            name: 'Anthony',
-            pass: ADMIN_PASS,
-            drinks: {},
-            isAdmin: true
-        };
-        localStorage.setItem('bebidasDB', JSON.stringify(users));
+const tr = {
+    es:{
+        title:"Control de Bebidas",login:"Iniciar Sesión",enter:"Entrar",newU:"Nuevo Usuario",reg:"Crear Usuario",create:"Crear",cancel:"Cancelar",
+        welcome:"Bienvenido, ",total:"Tu total:",add:"+ Agregar",con:"- Consumir",logout:"Cerrar Sesión",bring:"¿Qué traes?",beer:"Cerveza",
+        other:"Otra bebida",addO:"Agregar",consumed:"¿Qué consumiste?",general:"Estado General de la Fiesta",
+        fill:"Completa todos los campos",passNo:"Las contraseñas no coinciden",exists:"Usuario ya existe",created:"¡Usuario creado!",
+        noUser:"Usuario no encontrado",wrongPass:"Contraseña incorrecta",howBeer:"¿Cuántas cervezas traes?",howMany:"¿Cuántas?",
+        noDrinks:"Aún no trajiste nada",confirmDel:"¿ELIMINAR a \"{0}\" y todas sus bebidas?",deleted:"Usuario eliminado"
+    },
+    en:{
+        title:"Drink Control",login:"Login",enter:"Login",newU:"New User",reg:"Create User",create:"Create",cancel:"Cancel",
+        welcome:"Welcome, ",total:"Your total:",add:"+ Add",con:"- Consume",logout:"Logout",bring:"What are you bringing?",beer:"Beer",
+        other:"Other drink",addO:"Add",consumed:"What did you drink?",general:"Party Status",
+        fill:"Fill all fields",passNo:"Passwords don't match",exists:"User already exists",created:"User created!",
+        noUser:"User not found",wrongPass:"Wrong password",howBeer:"How many beers?",howMany:"How many?",
+        noDrinks:"You haven't brought anything yet",confirmDel:"PERMANENTLY DELETE \"{0}\" and all drinks?",deleted:"User deleted"
+    },
+    de:{
+        title:"Getränkekontrolle",login:"Anmelden",enter:"Anmelden",newU:"Neuer Benutzer",reg:"Benutzer erstellen",create:"Erstellen",cancel:"Abbrechen",
+        welcome:"Willkommen, ",total:"Deมีการรวม:",add:"+ Hinzufügen",con:"- Verbraucht",logout:"Abmelden",bring:"Was bringst du mit?",beer:"Bier",
+        other:"Anderes Getränk",addO:"Hinzufügen",consumed:"Was hast du getrunken?",general:"Party-Übersicht",
+        fill:"Alle Felder ausfüllen",passNo:"Passwörter stimmen nicht",exists:"Benutzer existiert bereits",created:"Benutzer erstellt!",
+        noUser:"Benutzer nicht gefunden",wrongPass:"Falsches Passwort",howBeer:"Wie viele Biere?",howMany:"Wie viele?",
+        noDrinks:"Du hast noch nichts mitgebracht",confirmDel:"\"{0}\" und alle Getränke endgültig LÖSCHEN?",deleted:"Benutzer gelöscht"
     }
+};
 
-    // El resto del código es exactamente igual que antes,
-    // solo cambié las dos líneas de arriba y el texto visible del admin
+let lang = 'es';
+let users = JSON.parse(localStorage.getItem('bebidasDB')) || {};
+let cur = null;
+let admin = false;
+const ADMIN_KEY = 'anthony';
+const ADMIN_PASS = '.Asking882465';
 
-    function t(key, placeholder = null) {
-        let text = translations[currentLang][key] || translations.es[key] || key;
-        if (placeholder !== null) text = text.replace("{0}", placeholder);
-        return text;
+if (!users[ADMIN_KEY]) {
+    users[ADMIN_KEY] = {name:'Anthony',pass:ADMIN_PASS,drinks:{},isAdmin:true};
+    localStorage.setItem('bebidasDB', JSON.stringify(users));
+}
+
+function t(k, p=null) {
+    let s = tr[lang][k] || tr.es[k] || k;
+    return p ? s.replace('{0}', p) : s;
+}
+
+function changeLang() {
+    lang = document.getElementById('langSelect').value;
+    upd();
+}
+
+function upd() {
+    const e = id => document.getElementById(id);
+    e('title').textContent = t('title');
+    e('tLogin').textContent = t('login'); e('tEnter').textContent = t('enter'); e('tNew').textContent = t('newU');
+    e('tReg').textContent = t('reg'); e('tCreate').textContent = t('create'); e('tCancel').textContent = t('cancel');
+    e('tWelcome').innerHTML = t('welcome') + '<span id="name"></span><span id="adminBadge" class="admin-badge hidden">ADMIN</span>';
+    e('tTotal').textContent = t('total'); e('tAdd').textContent = t('add'); e('tCon').textContent = t('con'); e('tLogout').textContent = t('logout');
+    e('tBring').textContent = t('bring'); e('tBeer').textContent = t('beer'); e('tOther').textContent = t('other'); e('tAddO').textContent = t('addO');
+    e('tConsumed').textContent = t('consumed'); e('tGeneral').textContent = t('general');
+    if (cur) { e('name').textContent = users[cur].name; e('adminBadge').classList.toggle('hidden', !admin); }
+    genList(); conList();
+}
+
+window.login = function() {
+    const u = document.getElementById('userLogin').value.trim();
+    const p = document.getElementById('passLogin').value;
+    if (!u || !p) return alert(t('fill'));
+    const k = u.toLowerCase();
+    if (!users[k]) return alert(t('noUser'));
+    if (users[k].pass !== p) return alert(t('wrongPass'));
+    cur = k; admin = (k===ADMIN_KEY);
+    document.getElementById('name').textContent = users[k].name;
+    document.getElementById('adminBadge').classList.toggle('hidden', !admin);
+    document.getElementById('login').classList.add('hidden');
+    document.getElementById('panel').classList.remove('hidden');
+    upd(); count(); conList();
+};
+
+window.showReg = ()=>{document.getElementById('login').classList.add('hidden');document.getElementById('register').classList.remove('hidden');upd();}
+window.back = ()=>{document.getElementById('register').classList.add('hidden');document.getElementById('login').classList.remove('hidden');upd();}
+window.reg = function(){
+    const u=document.getElementById('newUser').value.trim();
+    const p1=document.getElementById('p1').value, p2=document.getElementById('p2').value;
+    if(!u||!p1||p1!==p2) return alert(t('passNo'));
+    const k=u.toLowerCase();
+    if(users[k]) return alert(t('exists'));
+    if(k===ADMIN_KEY) return alert('Reservado');
+    users[k]={name:u,pass:p1,drinks:{},isAdmin:false};
+    localStorage.setItem('bebidasDB',JSON.stringify(users));
+    alert(t('created')); back(); genList();
+};
+
+window.addMode = ()=>{document.getElementById('addSec').classList.remove('hidden');document.getElementById('conSec').classList.add('hidden');}
+window.conMode = ()=>{document.getElementById('conSec').classList.remove('hidden');document.getElementById('addSec').classList.add('hidden');conList();}
+window.showOther = ()=>document.getElementById('other').classList.remove('hidden');
+window.addO = function(){
+    const n=document.getElementById('oName').value.trim().toLowerCase();
+    const q=+document.getElementById('oQty').value;
+    if(n&&q>0){add(n,q);document.getElementById('oName').value='';document.getElementById('other').classList.add('hidden');}
+};
+
+window.addBeer = ()=>{const q=prompt(t('howBeer'),'6'); if(q&&q>0)add('cerveza',+q);}
+function add(t,q){if(!users[cur].drinks[t])users[cur].drinks[t]=0; users[cur].drinks[t]+=q; save();}
+function count(){document.getElementById('contador').textContent=Object.values(users[cur].drinks).reduce((a,b)=>a+b,0);}
+function conList(){
+    const d=document.getElementById('list'); d.innerHTML='';
+    const drinks=users[cur].drinks;
+    if(Object.keys(drinks).length===0){d.innerHTML=`<p>${t('noDrinks')}</p>`;return;}
+    for(const [type,qty]of Object.entries(drinks)){
+        if(qty<=0)continue;
+        const pretty=type.charAt(0).toUpperCase()+type.slice(1);
+        d.innerHTML+=`<div class="drink"><div><strong>${pretty}</strong>: ${qty}</div>
+            <div><input type="number" id="q${type}" min="1" max="${qty}" value="1" style="width:70px">
+            <button class="btn-d" onclick="con('${type}')">OK</button></div></div>`;
     }
-
-    function changeLanguage() {
-        currentLang = document.getElementById('langSelect').value;
-        updateAllTexts();
+}
+window.con = function(t){
+    const q=+document.getElementById('q'+t).value;
+    if(q>0&&users[cur].drinks[t]>=q){
+        users[cur].drinks[t]-=q;
+        if(users[cur].drinks[t]<=0)delete users[cur].drinks[t];
+        save();
     }
+};
 
-    // === TODAS LAS FUNCIONES (login, register, add, consume, delete, etc.) ===
-    // Son idénticas al mensaje anterior, solo cambié la verificación del admin:
-    // isAdmin = (key === ADMIN_KEY);
+function save(){localStorage.setItem('bebidasDB',JSON.stringify(users));count();conList();genList();}
+window.logout = ()=>{if(confirm('Logout?')){cur=null;admin=false;document.getElementById('panel').classList.add('hidden');document.getElementById('login').classList.remove('hidden');document.getElementById('addSec').classList.add('hidden');document.getElementById('conSec').classList.add('hidden');upd();}}
 
-    window.login = function() {
-        const u = document.getElementById('userLogin').value.trim();
-        const p = document.getElementById('passLogin').value;
-        if (!u || !p) return alert(t('alertComplete'));
-        const key = u.toLowerCase();
-        if (!users[key]) return alert(t('alertWrongUser'));
-        if (users[key].pass !== p) return alert(t('alertWrongPass'));
-        currentUser = key;
-        isAdmin = (key === ADMIN_KEY);
-        document.getElementById('welcomeName').textContent = users[key].name;
-        document.getElementById('adminTag').classList.toggle('hidden', !isAdmin);
-        document.getElementById('login').classList.add('hidden');
-        document.getElementById('panel').classList.remove('hidden');
-        updateAllTexts();
-        updateCounter();
-        updateConsumeList();
-        updateGeneral();
-    };
+window.delUser = function(k){
+    if(!admin||k===ADMIN_KEY)return;
+    if(confirm(t('confirmDel',users[k].name))){
+        delete users[k]; save(); alert(t('deleted'));
+    }
+};
 
-    // === EL RESTO DEL CÓDIGO ES IGUAL QUE EN LA VERSIÓN ANTERIOR ===
-    // (registerUser, addMode, consumeMode, addBeer, addOther, consume, deleteUser, updateGeneral, etc.)
-
-    window.deleteUser = function(key) {
-        if (!isAdmin || key === ADMIN_KEY) return;
-        const name = users[key].name;
-        if (confirm(t('alertConfirmDelete', name))) {
-            delete users[key];
-            saveAll();
-            alert(t('alertDeleted'));
+function genList(){
+    const d=document.getElementById('general'); d.innerHTML='';
+    for(const k in users){
+        const u=users[k];
+        const tot=Object.values(u.drinks).reduce((a,b)=>a+b,0);
+        let html=`<div class="card"><div style="font-size:20px;font-weight:bold;color:var(--p)">${u.name} ${k===ADMIN_KEY?'(ADMIN)':''}: ${tot}</div>`;
+        if(admin&&k!==ADMIN_KEY) html+=` <button class="btn-del" onclick="delUser('${k}')">Löschen</button>`;
+        html+='<table><tr><th>Getränk</th><th>Menge</th></tr>';
+        for(const [b,c]of Object.entries(u.drinks)){
+            const p=b.charAt(0).toUpperCase()+b.slice(1);
+            html+=`<tr><td>${p}</td><td>${c}</td></tr>`;
         }
-    };
+        html+='</table></div>';
+        d.innerHTML+=html;
+    }
+}
 
-    // Init
-    updateAllTexts();
-    updateGeneral();
+upd(); genList();
 </script>
 </body>
 </html>
